@@ -1,0 +1,81 @@
+.project {
+    margin: 1.5em 0;
+    border: 1px solid #444;
+    padding: .5em .5em .5em 2em;
+    position: relative;
+    max-width: 40em;
+}
+
+/* Display priority tags as colored circle badges instead of text. */
+.project-status {
+	display: block;
+    position: absolute;
+    top: .75em;
+    left: .5em;
+    color: transparent;
+	content: '';
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    margin-right: .25em;
+}
+
+.project-status[data-status="today"] {
+	background: #d9534f;
+}
+
+.project-status[data-status="todo"] {
+    background: #0275d8;
+}
+
+.project-status[data-status="done"] {
+    background: #5cb85c;
+}
+
+.project-status[data-status="cont"] {
+    background: #5bc0de;
+}
+
+.project-status[data-status="wait"] {
+    background: #ccc;
+}
+
+.project-status[data-status="important"],
+.project-status[data-status="now"] {
+    background: #ffd946;
+}
+
+.project .project-title {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.project-title a {
+    color: inherit;
+}
+
+.project-meta {
+    font-size: smaller;
+    color: #999;
+}
+
+.project-link {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.project-note {
+    font-size: smaller;
+}
+
+.project-note-date {
+    margin-right: .5em;
+}
+
+.project-note-text {
+    color: #999;
+}
+
+.project-sep {
+    color: #666;
+}
