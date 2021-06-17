@@ -1,0 +1,13 @@
+.view-hello-world {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.view-hello-world li {
+	display: block;
+    margin: 1em 0;
+    border: 1px solid #444;
+    padding: .5em;
+    max-width: 40em;
+}
