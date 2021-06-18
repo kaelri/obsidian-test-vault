@@ -10,7 +10,7 @@ A simple view:
 
 let projects = dv.pages( '#project' );
 
-dv.loadView( 'hello-world', projects );
+dv.view( 'hello-world', projects );
 
 ```
 
@@ -24,6 +24,6 @@ A more complex view:
 
 let projects = dv.pages('#project');
 
-dv.loadView( 'project-cards', projects );
+dv.view( 'project-cards', projects );
 
 ```
