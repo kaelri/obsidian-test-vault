@@ -8,7 +8,7 @@ A simple view:
 
 ```dataviewjs
 
-let projects = dv.pages( '#project' );
+let projects = dv.pages().where( p => p.type === 'project' ).sort( p => p.title );
 
 dv.view( 'hello-world', projects );
 
@@ -22,8 +22,8 @@ A more complex view:
 
 ```dataviewjs
 
-let projects = dv.pages('#project');
+let projects = dv.pages().where( p => p.type === 'project' );
 
-dv.view( 'project-cards', projects );
+dv.view( 'project-cards', { projects: projects, order: 'asc' } );
 
 ```

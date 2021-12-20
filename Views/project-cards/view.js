@@ -1,29 +1,21 @@
-let projects = input;
+let projects = input.projects;
+let order    = input.order || 'asc';
 
 // SORT
-projects.sort( function(project) {
+projects = projects.sort( project => {
+
+	// DATE
+	let date = moment( ( project.notes && Object.keys(project.notes).length ) ? Object.keys(project.notes)[0] : null ).unix();
 	
-	let statusPriorities = {
-		important: 4,
-		today:     3,
-		todo:      2,
-		wait:      1,
-	}
+	// PRIORITY
+	let priority = project.priority || 9;
+
+	// TITLE
+	let title = project.title || project.file.name;
 	
-	let priority = statusPriorities[ project.status ] || 0;
+	return `${date}-${priority}-${title}`; // default
 	
-	
-	if ( project.notes && Object.keys(project.notes).length ) {
-		var date = moment( Object.keys(project.notes)[0] );
-	} else {
-		var date = moment();
-	}
-	
-	let sortValue = `${priority}-${date.format()}`;
-	
-	return sortValue;
-	
-}, 'asc');
+}, order);
 
 // RENDER
 let html = `<section class="project-cards">`;
@@ -31,40 +23,77 @@ let html = `<section class="project-cards">`;
 for (let i = 0; i < projects.length; i++) {
 
 	const project = projects[i];
+
+	// Jump ahead to get the most relevant date.
+	let now = moment();
+
+	if ( project.status == 'todo' && project.notes && Object.keys(project.notes).length ) {
+		projectTimestamp = Object.keys(project.notes)[0];
+		let projectDate  = moment( projectTimestamp );
+
+		if ( projectDate.format('YYYY MM DD') == now.format('YYYY MM DD') || projectDate.unix() <= now.unix() ) {
+			project.status = 'today';
+		}
+	}
 	
-	html += `<article class="project">`;
+	html += `<article class="project-card">`;
 		
 	// ICON
-	if ( project.status ) html += `<span class="project-status" data-status="${project.status}">&nbsp;</span>`;
+	if ( project.status ) html += `<span class="project-card-status" data-status="${project.status}">&nbsp;</span>`;
 
 	// TITLE
 	let title = project.title || project.file.name;
-	html += `<h1 class="project-title"><a href="${project.file.name}" data-href="${project.file.name}" class="internal-link">${title}</a></h1>`;
+	html += `<h1 class="project-card-title"><a href="${project.file.name}" data-href="${project.file.name}" class="internal-link">${title}</a></h1>`;
 
-	// LINE 1
-	html += `<div class="project-meta">`;
+	// CODE
+	html += `<div class="project-card-meta">`;
 
-	if ( project.code ) html += `<span class="project-code">${project.code}</span>`;
+	if ( project.code ) html += `<span class="project-card-code">${project.code}</span>`;
+
+	html += '</div>';
+
+	// NOTES
+	if ( project.notes && Object.keys(project.notes).length ) { for (let l = 0; l < Object.keys(project.notes).length; l++) {
+		const noteTimestamp = Object.keys(project.notes)[l];
+		const noteText      = project.notes[ noteTimestamp ];
+
+		let noteDate        = moment( noteTimestamp );
+		let noteHasTime     = ( noteTimestamp.split(' ').length > 1 );
+
+		
+		let sameYear        = ( now.format('YYYY') == noteDate.format('YYYY') );
+
+		let displayDate     = noteDate.calendar(null, {
+			sameDay: '[Today]',
+			nextDay: '[Tomorrow]',
+			nextWeek: 'dddd',
+			lastDay: '[Yesterday]',
+			lastWeek: '[Last] dddd',
+			sameElse: ( sameYear ? 'D MMMM' : 'D MMMM YYYY' ),
+		});
+
+		if ( noteHasTime ) {
+			displayDate += ' <span class="project-card-sep">•</span> ' + noteDate.format( 'h:mm a' );
+		}
+
+		html += `<div class="project-card-note">
+			<span class="project-card-note-date" title="${noteDate}">${displayDate}</span>
+			<span class="project-card-note-text" title="${noteDate}">${noteText}</span>
+		</div>`;
+			
+	}}
+
+	// LINKS
+	html += `<div class="project-card-meta">`;
 
 	if ( project.links && Object.keys(project.links).length ) { for (let l = 0; l < Object.keys(project.links).length; l++) {
-		const linkText = Object.keys(project.links)[l];
-		const linkURL  = project.links[ linkText ];
-		html += ` <span class="project-sep">•</span> <a class="project-link" href="${linkURL}">${linkText}</a>`;
+		let linkText = Object.keys(project.links)[l];
+		let linkURL  = project.links[ linkText ];
+		html += `<a class="project-card-link" href="${linkURL}">${linkText}</a>`;
 			
 	}}
 
 	html += '</div>';
-
-	if ( project.notes && Object.keys(project.notes).length ) { for (let l = 0; l < Object.keys(project.notes).length; l++) {
-		const noteDate = Object.keys(project.notes)[l];
-		const noteText  = project.notes[ noteDate ];
-
-		html += `<div class="project-note">
-			<span class="project-note-date">${moment(noteDate).calendar()}</span>
-			<span class="project-note-text">${noteText}</span>
-		</div>`;
-			
-	}}
 
 	html += '</div>';
 

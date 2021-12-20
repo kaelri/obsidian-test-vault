@@ -1,9 +1,9 @@
 ---
-title: ''
-status: 'todo'
-code: ''
+title: 
+status: todo
+code: 
 notes:
-  '{{date:YYYY-MM-DD}}': ''
+  '{{date:YYYY-MM-DD}}': 
 links:
-  'WMJ': ''
+  Link: 
 ---

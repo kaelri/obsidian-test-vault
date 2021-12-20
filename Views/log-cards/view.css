@@ -1,0 +1,40 @@
+.log-cards {
+    margin: 2em 0;
+}
+
+.markdown-preview-view .log-cards .internal-link {
+    text-decoration: none;
+}
+
+.log-card {
+    margin: .5em 0;
+    background: hsla(0, 0%, 0%, .1);
+    padding: .5em;
+    position: relative;
+    /* max-width: 40em; */
+}
+
+.log-card-link,
+.log-card-link:hover,
+.markdown-preview-view .log-card-link,
+.markdown-preview-view .log-card-link:hover {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.log-card .log-card-title {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.project-card-title a {
+    color: inherit;
+}
+
+.log-card-meta {
+    font-size: smaller;
+    color: #999;
+    line-height: 1.5;
+    margin-top: .25em;
+}

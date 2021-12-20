@@ -1,0 +1,45 @@
+.bookmarks {
+	/* padding-left: 2em; */
+}
+
+.bookmark {
+    display: block;
+    margin: .5rem 0;
+    color: inherit;
+    padding: .5rem;
+    /* border: 1px solid #444; */
+    position: relative;
+    overflow: hidden;
+    background: hsla(0, 0%, 0%, .1);
+}
+
+.bookmark,
+.bookmark:hover,
+.markdown-preview-view .bookmark,
+.markdown-preview-view .bookmark:hover {
+    text-decoration: none;
+}
+
+.bookmark-text {
+    /* font-weight: bold; */
+	/* font-size: larger; */
+}
+
+.bookmark-note {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: smaller;
+}
+
+.bookmark-domain {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: smaller;
+    color: #666;
+}
